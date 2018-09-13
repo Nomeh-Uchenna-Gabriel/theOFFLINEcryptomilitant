@@ -1,0 +1,673 @@
+/* The main container of the game */
+#sc {
+    position: fixed;
+    background: linear-gradient(rgb(32, 75, 139) 0%, gainsboro 50%);
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 0px 3px 1px #222;
+    box-sizing: border-box;
+    border-radius: 3px;
+    overflow: hidden;
+    perspective: 500px;
+    -webkit-perspective: 500px;
+    -moz-perspective: 500px;
+
+}
+
+/* The progress bars container */
+#tops {
+    position: absolute;
+    width: 100%;
+    height: 15%;
+    background: rgba(0, 0, 0, 0.137);
+    top: 0px;
+    left: 0px;
+    color: rgb(214, 228, 214);
+    z-index: 40;
+}
+
+/* The body of the game|gaming board */
+#bdy {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    background: radial-gradient(circle at top left, #6889be 0%, #1f2e46 20%);
+    box-shadow: 0px 0px 4px 2px #ddd;
+    overflow: hidden;
+    animation: cbg 20s linear infinite alternate;
+    z-index: 6;
+}
+
+/* The helicopter */
+#fig {
+    position: absolute;
+    height: 50px;
+    width: 25px;
+    background-color: rgb(63, 117, 96);
+    bottom: 30px;
+    border: 1px solid rgba(245, 245, 245, 0.8);
+    left: 100px;
+    border-radius: 30px;
+    z-index: 700;
+}
+
+.in-fig {
+    position: absolute;
+    display: block;
+}
+
+/* The Helicopter's rotor */
+#l1 {
+    width: 80px;
+    left: -27.5px;
+    top: 22px;
+    height: 5px;
+    background-color: transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    animation: rotor 3s linear infinite;
+}
+
+/* Animating The rotor */
+@keyframes rotor {
+    from {
+        transform: rotate(0deg)
+    } to {
+        transform: rotate(360deg)
+    }
+}
+
+/* The game pad widget */
+#ctrl-div {
+    position: absolute;
+    width: 100%;
+    height: 22%;
+    bottom: 0px;
+    left:  0px;
+    background-color: transparent;
+    z-index: 500;
+    overflow: visible;
+}
+
+/* The falling Rocks1 used to style it */
+.block {
+    position: absolute;
+    background-color: rgb(226, 193, 44);
+    border-radius: 50px;
+    border: none;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    height: 15px;
+}
+
+/* The falling Rocks2 used to make it fall */
+.obj {
+    animation-name: obj;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    z-index: 600;
+}
+
+/* Falling the rocks */
+@keyframes obj {
+    from{
+        top: -50%;
+    } to {
+        top: 150%;
+    }
+}
+
+/* The game pad's control widget2 used to position it x/y */
+#cnt-ctrl {
+    position: absolute;
+    background-color: transparent;
+    border-radius: 100%;
+    font-size: 20px;
+    max-width: 200px;
+    max-height: 200px;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+/* The control buttons */
+.btn-ctrl {
+    position: absolute;
+    width: 35%;
+    height: 35%;
+    color: #135;
+    border: none;
+    font-size: inherit;
+    outline: none;
+    border-radius: 100%;
+    background-color: whitesmoke;
+    box-shadow: 0px 0px 3px 2px rgb(107, 123, 138);
+    transition: .25s;
+}
+
+#btn-right {
+    top: 32.5%;
+    right: 0%;
+}
+
+#btn-left {
+    top: 32.5%;
+    left: 0%;
+}
+
+#btn-top {
+    top: 0%;
+    left: 32.5%;
+}
+
+#btn-bottom {
+    bottom: 0%;
+    left: 32.5%;
+}
+
+/* The play/pause/continue button */
+#play_pause {
+    position: absolute;
+    width: 25%;
+    min-width: 50px;
+    height: 40px;
+    right: 5%;
+    bottom: 5%;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 4px 1px rgb(62, 110, 97);
+    background-color: rgba(65, 150, 110);
+    transition: .25s;
+}
+
+/* The fullscreen button */
+#home {
+    position: absolute;
+    width: 25%;
+    min-width: 50px;
+    height: 40px;
+    left: 5%;
+    bottom: 5%;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    color: rgb(24, 124, 77);
+    box-shadow: 0px 0px 4px 1px rgb(127, 139, 136);
+    background-color: rgb(255, 255, 255);
+    transition: .25s;
+}
+
+#play_pause:hover {
+    background-color: #ddd;
+    color: rgb(50, 90, 50);
+}
+
+#home:hover {
+    background-color: #135;
+    color: #dff;
+}
+
+#tbl_tops {
+    position: absolute;
+    top: 5%;
+    right: 0%;
+    width: 90%;
+    height: 90%;
+}
+
+#in_tops {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background-color: transparent;
+    top: 5%;
+    right: 0px;
+}
+
+#prg_life {
+    position: absolute;
+    background: linear-gradient(20deg, rgba(255, 99, 71, 0.858) 0%, transparent 20%, transparent 80%, rgba(255, 99, 71, 0.658) 100%);
+    border: 1px solid rgba(156, 158, 12, 0.603);
+    border-radius: 50px;
+    width: 60%;
+    height: 15%;
+    max-height: 12px;
+    min-height: 8px;
+    right: 60px;
+    top: 9%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#life {
+    position: absolute;
+    background-color: rgba(80, 223, 80, 0.794);
+    border: none;
+    width: 0%;
+    height: 100%;
+    right: 0px;
+    top: 0%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    transition: .5s;
+}
+
+#icon-life {
+    position: absolute;
+    top: 7%;
+    right: 22px;
+}
+
+#prg_time {
+    position: absolute;
+    background: linear-gradient(20deg, rgba(223, 195, 191, 0.658) 0%, transparent 20%, transparent 80%, rgba(226, 206, 202, 0.658) 100%);
+    border: 1px solid rgb(233, 224, 205);
+    border-radius: 50px;
+    width: 60%;
+    height: 15%;
+    max-height: 12px;
+    min-height: 8px;
+    right: 60px;
+    top: 36%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#time {
+    position: absolute;
+    background-color: #ffffffad;
+    border: none;
+    width: 0%;
+    height: 100%;
+    right: 0px;
+    top: 0%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    animation: time_anim 60s linear 1 forwards paused; 
+}
+
+#icon-time {
+    position: absolute;
+    top: 35%;
+    right: 22px;
+}
+
+#prg_until-finish {
+    position: absolute;
+    background: linear-gradient(20deg, rgba(236, 200, 82, 0.795) 0%, transparent 20%, transparent 80%, rgba(236, 200, 82, 0.795) 100%);
+    border: 1px solid rgb(180, 128, 16);
+    border-radius: 50px;
+    width: 60%;
+    height: 15%;
+    max-height: 12px;
+    min-height: 8px;
+    right: 60px;
+    top: 66%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#until-finish {
+    position: absolute;
+    background-color: rgba(236, 200, 82, 0.795);
+    border: none;
+    width: 0%;
+    height: 100%;
+    right: 0px;
+    top: 0%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    animation: until-finish_anim 10s linear 1 forwards paused; 
+}
+
+#icon-until-finish {
+    position: absolute;
+    top: 65%;
+    right: 22px;
+}
+
+* {
+    font-family: monospace;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/* The *appear lifes & it's scale keyframe*/
+.lfs {
+    position: absolute;
+    top: 23%;
+    left: 20%;
+    width: 30px;
+    height: 30px;
+    background-color: none;
+    border-radius: 30px;
+    animation: slk .25s linear infinite alternate;
+}
+
+@keyframes slk {
+    from {
+        transform: scale(1);
+    } to {
+        transform: scale(1.2)
+    }
+}
+
+.lfs svg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+/* The life visual timer */
+.cir-lf {
+    stroke-dashoffset: 0px;
+    animation: dash 10s linear 1 forwards;
+}
+
+@keyframes dash {
+    from {
+        stroke-dashoffset: 0px;
+    } to {
+        stroke-dashoffset: 75.5px;
+    }
+}
+
+@keyframes until-finish_anim {
+    from {
+        width: 100%;
+    } to {
+        width: 0%;
+    }
+}
+
+@keyframes time_anim {
+    from {
+        width: 100%;
+    } to {
+        width: 0%;
+    }
+}
+
+.notify {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.705);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: notify_anim .25s linear 4.75s 1 forwards;
+}
+
+.notify_svg_circle{
+    animation: notify_svg_circle_anim 5s linear 1 forwards;
+    fill: #0e4b6359;
+    stroke: #e2b729;
+}
+
+.notify_svg_text {
+    stroke: #f5f5f5d0;
+    fill: none;
+    font-family: monospace, arial;
+    font-weight: bolder;
+    stroke-width: 1px;
+    font-size: 45px;
+}
+
+@keyframes notify_svg_circle_anim {
+    from {
+        stroke-dashoffset: 472px;
+    } to {
+        stroke-dashoffset: 0px;
+    }
+}
+
+@keyframes notify_anim {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    } to {
+        transform: scale(20);
+        opacity: 0;
+    }
+}
+
+/* The final section */
+#final_sect {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    background-color: #010d16;
+    z-index: 1500;
+    color: rgba(194, 99, 83, 0.945);
+    font-family: arial;
+    perspective: 500px;
+    -webkit-perspective: 500px;
+    -moz-perspective: 500px;
+    opacity: 0;
+    display: none;
+    transition: .3s;
+}
+
+#final_sect *{
+    position: absolute;
+    width: 96%;
+    left: 2%;
+    background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0) 100%);
+
+}
+
+#final_tops {
+    height: 40%;
+    top: 0%;
+    transform: rotateX(180deg);
+    transform-origin: top center;
+    color: gainsboro;
+    padding: 60px 20px 5px 20px;
+    transition: .25s;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+#final_tops_a {
+    position: absolute;
+    width: 100%;
+    height: 45%;
+    left: 0px;
+    top: 0px;
+    color: rgb(243, 161, 9);
+    text-shadow: 0px 0px 3px rgba(15, 14, 14, 0.788);
+    max-height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    box-sizing: border-box;
+    font-weight: lighter;
+}
+
+#final_downs {
+    height: 60%;
+    top: 40%;
+    transform: rotateX(-180deg);
+    transform-origin: bottom center;
+    transition: .25s;
+    color: rgb(228, 231, 236);
+    font-size: 17px;
+    text-shadow: 0px 0px 3px rgb(8, 75, 87);
+    overflow: visible;
+    perspective: 500px;
+    -webkit-perspective: 500px;
+    -moz-perspective: 500px;
+}
+
+/* The burning button */
+#try_again {
+    position: absolute;
+    width: 70%;
+    height: 65px;
+    left: 15%;
+    bottom: 0px;
+    transform: rotateX(-20deg);
+    background: transparent;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    transition: .25s;
+}
+
+#try_again:hover {
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+#try_again_svg {
+    position: relative;
+    max-width: 200px;
+    background: transparent;
+}
+
+#rect_distort {
+    fill: rgb(240, 151, 93);
+}
+
+#text_distort {
+    font-size: 30px;
+    text-shadow: 0px 0px 3px rgb(8, 75, 87);
+    font-weight: bolder;
+}
+
+/* The service pane */
+#service {
+    position: absolute;
+    background-color: transparent;
+    width: 70px; 
+    height: 30px;
+    top: 5px;
+    left: 5px;
+    z-index: 2000;
+    padding: 0px;
+    margin: 0px;
+}
+
+#is_offline {
+    position: absolute;
+    background-color: transparent;
+    top: 6px;
+    left: 27px;
+    z-index: 2200;
+    display: none;
+}
+
+#show_msg {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 22%;
+    left: -150%;
+    background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0) 100%);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
+    z-index: 3000;
+    color: wheat;
+    font-size: 15px;
+    text-align: left;
+    padding-left: 35px;
+    box-sizing: border-box;
+    transition: .3s;
+}
+
+/* The welcome pane */
+#welcome_screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #222;
+    top: 0%;
+    left: 0%;
+    overflow: auto;
+    padding-top: 60px;
+    z-index: 5000;
+}
+
+#welcome_screen p {
+    color: #fff;
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0) 100%);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
+    max-width: 400px;
+    text-align: left;
+    font-size: 16px;
+}
+
+#welcome_screen div {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 50px;
+    width: 100%;
+    background-color: #337f92;
+    line-height: 50px;
+    box-sizing: border-box;
+    text-align: center;
+    color: aliceblue;
+    font-size: 16px;
+}
+
+#welcome_screen div button {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 50px;
+    width: 50px;
+    background-color: #c23f28;
+    text-align: center;
+    color: aliceblue;
+    border: none;
+    outline: none;
+    font-size: 30px;
+}
+
+/* The progress 1/12 */
+#_progress {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 8%;
+    left: 5px;
+    background-color: transparent;
+    line-height: 30px;
+    color: #f9f9ff;
+    font-size: 15px;
+    border-radius: 100%;
+    z-index: 4000;
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The OFFLINE cryptomilitant</title>
+    <link rel="stylesheet" href="index.css"/>
+    <script src="index.js"></script>
+</head>
+<body>
+    <!-- The main container of the game -->
+    <section id="sc" oncontextmenu="return false">
+        <!-- The 1/12 division -->
+        <div id="_progress"></div>
+        <!-- The little red offline icon beside the service pole -->
+        <svg id="is_offline" width="8px" height="8px" viewBox="0, 0, 25, 25">
+            <circle cx="12.5" cy="12.5" r="11" stroke="tomato" fill="none" stroke-width="3"/>
+            <line x1="21" y1="5" x2="5" y2="21" stroke="tomato" fill="none" stroke-width="3"/>
+        </svg>
+        <div id="service">
+            <!-- not specified here: js -> The service pole and it's bar goes here! -->
+        </div>
+        <!-- The progress bars container: #tops -->
+        <div id="tops">
+            <div id="in_tops">
+                <!-- For the life bar -->
+                <div id="prg_life">
+                    <div id="life"></div>
+                </div>
+                <svg id="icon-life" width="16px" height="15px">
+                    <path fill="tomato" d="M 7.5 15 C -7.5 0 7.5 0 7.5 3 C 7.5 0 22.5 0 7.5 15"/>
+                </svg>
+
+                <!-- for the bomb defusion timer -->
+                <div id="prg_time">
+                    <div id="time" class="time_c"></div>
+                </div>
+                <svg id="icon-time" width="16px" height="15px">
+                    <circle cx="7.5" cy="7.5" r="7" fill="none" stroke="whitesmoke" stroke-width="2" stroke-dasharray="8">
+                        <!-- This animation is paused by javaScript: plays once offline -->
+                        <animate attributeName="stroke-dasharray" from="0" to="30" dur="4s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="7.5" cy="7.5" r="1" fill="gold" stroke="none" stroke-width="1.5"/>
+                    <path fill="none" stroke="white" stroke-width="1" d="m 3 3 l 5 5 l 5 -5"/>
+                    <path fill="whitesmoke" stroke="white" stroke-width="1" d="M 4 8 h 8 l 4 8 h -16 z"/>
+                    <rect width="6" height="3.5" stroke="black" fill="none" x="5" y="9.5"/>
+                </svg>
+
+            <!-- for the until-finish -->
+            <div id="prg_until-finish">
+                <div id="until-finish" class="until-finish_c"></div>
+                </div>
+                <svg id="icon-until-finish" width="16px" height="15px">
+                    <circle cx="7.5" cy="7.5" r="7" fill="none" stroke="gold" stroke-width="1.5"/>
+                    <circle cx="7.5" cy="7.5" r="1" fill="gold" stroke="none" stroke-width="1.5"/>
+                    <path fill="none" stroke="white" stroke-width="1" d="m 3 3 l 5 5 l 5 -5"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- The blue game board -->
+        <div id="bdy">
+            <!-- The in-game pop up -->
+            <div id="show_msg">
+                <!-- The bigger no-service icon -->
+                <svg style="position: absolute; left: 2px; top: 5px;" width="25px" height="25px">
+                    <circle cx="12.5" cy="12.5" r="11" stroke="tomato" fill="none" stroke-width="2"/>
+                    <line x1="21" y1="5" x2="5" y2="21" stroke="tomato" fill="none" stroke-width="2"/>
+                </svg>
+                The package is now offline!, This is our last chance. <br />Get more life and avoid hits to help quicken the bomb defusion process before it explodes.
+            </div>
+            <!-- A polyfill for the *appear life to ensure it's class register on css : .lfs -> !important -->
+            <span class="lfs" style="top: 0px; opacity: 0;"></span>
+            <!-- The helicopter [draggable = false]: !important -->
+            <div id="fig" draggable="false">
+                <!-- A transparent container for the helicopter's rotor: #l1 -->
+                <span class="in-fig" id="l1">
+                    <span class="in-fig" style="width: 20px; height: 100%; background-color: whitesmoke; top: 0px; left: 0px;"></span>
+                    <span class="in-fig" style="width: 20px; height: 100%; background-color: whitesmoke; top: 0px; right: 0px;"></span>
+                    <span class="in-fig" style="width: 5px; height: 5px; background-color: black; top: 0px; left: 38px; border-radius: 100%;"></span>
+                    <span class="in-fig" style="width: 40px; height: 1px; background-color: black; top: 2px; left: 20px;"></span>
+                </span>
+            </div>
+        </div>
+       
+        <!-- The control-pad's layout -->
+        <div id="ctrl-div">
+            <div id="cnt-ctrl">
+                <!-- The control buttons reference the [id] for more info -->
+                <button oncontextmenu="return false" onmousedown="isKeyPressed = 1; button_dir2();" ontouchstart="isKeyPressed = 1; button_dir2();" ontouchend="isKeyPressed = 0;" onmouseup="isKeyPressed = 0;" class="btn-ctrl" id="btn-left">&lsaquo;</button>
+
+                <button oncontextmenu="return false" ontouchstart="isKeyPressed = 1; button_dir1();" onmousedown="isKeyPressed = 1; button_dir1();" ontouchend="isKeyPressed = 0;" onmouseup="isKeyPressed = 0;" class="btn-ctrl" id="btn-right">&rsaquo;</button>
+        
+                <button oncontextmenu="return false" class="btn-ctrl" id="btn-top" ontouchstart="isKeyPressed = 1; button_dir3();" onmousedown="isKeyPressed = 1; button_dir3();" ontouchend="isKeyPressed = 0;" onmouseup="isKeyPressed = 0;"><span style="writing-mode: vertical-lr; -webkit-writing-mode: vertical-lr; padding: 0%; margin: 0%">&lsaquo;</span></button>
+        
+                <button oncontextmenu="return false" class="btn-ctrl" id="btn-bottom" ontouchstart="isKeyPressed = 1; button_dir4();" onmousedown="isKeyPressed = 1; button_dir4();" ontouchend="isKeyPressed = 0;" onmouseup="isKeyPressed = 0;"><span style="writing-mode: vertical-lr; -webkit-writing-mode: vertical-lr; padding: 0%; margin: 0%;">&rsaquo;</span></button>
+            </div>
+            <button id="play_pause">play</button>
+            <button id="home" onclick="enter_full_screen()">full</button>
+
+        </div>
+    </section>
+    <!-- Leaving the game board -->
+
+    <!-- The final result shower -->
+    <section id="final_sect" oncontextmenu="return false">
+        <div id="final_tops">
+            <div id="final_tops_a">
+                <!-- Commander! We lost the war -->
+            </div>
+            <span id="final_info" style="background: transparent">
+                <!-- Outcome of the play instance -->
+            </span>
+        </div>
+        <div id="final_downs">
+                <div style="text-align: center; position: absolute; box-sizing:border-box; padding: 5px; top: 0px; transform: rotateX(-10deg); transform-origin: bottom center;">
+                    <!-- We can't just let them escape with this. <br>Start your engine now. -->
+                </div>
+            <button id="try_again" onclick="try_again()">
+                <!-- The burning widget -->
+                <svg id="try_again_svg" width="220px" height="65px" viewBox="0, 0, 200, 50">
+                    <defs>
+                        <filter id="distort_border">
+                            <feTurbulence type="turbulence" baseFrequency="0.2" numOctaves="2" seed="1" result="turbulence">
+                                <animate attributeName="baseFrequency" from="0.2" to="0.3" dur="2s" repeatCount="indefinite"/>
+                            </feTurbulence>
+                            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="45"/>
+                        </filter>
+                    </defs>
+                    <rect id="rect_distort" x="0" y="0" width="180" height="40" stroke="red" filter="url(#distort_border)"/>
+                <text fill="#000000d5" stroke="#dff" id="text_distort" x="100" y="30" text-anchor="middle" textLength="180px" lengthAdjust="spacingAndGlyphs">
+                    <!-- Divide And Rule! -->
+                </text>
+            </svg>
+            </button>
+        </div>
+    </section>
+    <!-- Leaving the last screen -->
+
+    <!-- The welcome screen comes last lol -->
+    <section id="welcome_screen" oncontextmenu="return false">
+        <div>The OFFLINE cryptomilitant<button onclick="document.getElementById('welcome_screen').style.top = '150%';document.getElementById('welcome_screen').remove(1)">&times;</button></div>
+        <center>
+        <p>
+            You are an '<span style="color: goldenrod;">Air Force Cadet</span>' in the military and your base was attacked by the enemy.<br>The enemy managed to plant a time bomb in your helicopter, when discovered, you were chosen as the operator to defuse the bomb.
+        </p>
+        
+        <p>
+            The bomb was encoded with an IC which is protected using the enemy's network such that any tampering will result in an explotion, the best way to defuse it is to fly northwards until the bomb IC goes OFFLINE such that it's receiver can no longer connect with the enemy's online network after which you must quickly defuse it before it detonates.
+        </p>
+
+        <p>
+            The more helicopters you save, the more ranks you get!.
+        </p>
+
+        <p>
+            As a 'Marshal Of The Air Force', you will have access to advanced technology giving you extraodinary strenght and inteligence.
+        </p>
+
+        <p>
+            Lifes restores your life as well as increase the defusion progress.<br />
+            You need at least two lives to help you quicken the defusion process against the bomb's timer.<br />Lifes only appear if the package is OFFLINE.
+        </p>
+        
+        <p>
+            Watch out for meteors as they can decrease your life and the defusion progress.
+        </p>
+
+        <p>
+            Use the keypad or the arrow keys of the keyboard to move the helicopter.<br><br> Good Luck!
+        </p>
+        </center>
+    </section>
+    <!-- Divide and rule!: ~ -->
+</body>
+</html>
