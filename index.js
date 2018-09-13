@@ -491,14 +491,14 @@ function continous(){
 //Returns a promotion as you'ld guess.
 function promote(){
     var a;
-    if(rank < 6){
+    if(rank < rankings.length-1){
         a = 'Congratulations! The bomb was succesfully defused before it\'s timer expires.<br><br> Because of your bravery and inteligence, the President is promoting your rank from \''+ rankings[rank] +'\' to \'' + rankings[rank+1] + '\'.';
         rank++;
-    } else if(rank === 6){
+    } else if(rank === rankings.length-1){
         a = 'Because of your bravery and inteligence, the President, inline with advice from the UN, Command Center and Armed Service Commitee, is promoting your rank from \''+ rankings[rank] +'\' to \'' + rankings[rank+1] + '\'.<br />As \''+ rankings[rank] +'\' you have special abilities, please make good use of them.<br /> You are now our only hope for survival Sir, please do not fail us';
         rank++;
         is_marshal = 1;
-    } else if(rank === 7){
+    } else if(rank === rankings.length){
         a = 'Divide and Conquer Sir!<br /><br>You\'re truly worthy of your rank.<br><br>May HERMES be with you.'
         rank = rank;
     }
@@ -511,10 +511,10 @@ function demote(){
     if(rank === 0){
         a = 'You happened to die of plane crash due to excessive hits from enemy meteor rocks!<br />You must avoid the hits and get lifes to succeed \'Cadet\'.';
         rank = 0;
-    } else if((rank >= 1) && (rank < 7) ){
+    } else if((rank >= 1) && (rank < rankings.length) ){
         a = 'You happened to die of plane crash due to excessive hits from enemy meteor rocks!<br /><br>As a result we have demoted you from \''+ rankings[rank] +'\' to \'' + rankings[rank-1] + '\'.<br /><br> You must avoid the hits and get lifes to succeed and also keep your eyes peeled to avoid further demotions.<br><br>Note that a cool feature awaits you as a \'Marshal Of The Air Force\'';
         rank--;
-    } else if(rank === 7){
+    } else if(rank === rankings.length){
         rank = 0;
         is_marshal = 0;
         a = 'This is outrageous Sir! You happened to die of plane crash due to excessive hits from enemy meteor rocks!<br /><br>As a result we are very sorry to let you know that your rank is no longer yours, the order for your demotion came from the president himself, you\'re now a \''+ rankings[rank] +'\'.<br /><br>As a field marshal, you have more than enough equips to facilitate your victory but you chose to loose, this is an act of treason but the Command Center considered your position.<br />Good luck \'Cadet\'';
